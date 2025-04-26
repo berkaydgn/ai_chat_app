@@ -1,0 +1,38 @@
+# Node.js dependencies
+node_modules/
+
+# Environment variables (API keys, etc.)
+.env
+
+# Log files
+*.log
+logs/
+
+# Chat bot data (database files)
+*.sqlite
+*.db
+
+# VS Code configuration folder
+.vscode/
+
+# System files (macOS and Windows)
+.DS_Store
+Thumbs.db
+
+# Test output
+coverage/
+.nyc_output/
+
+# Git configuration files
+.git/
+
+# Build output
+dist/
+build/
+
+# Temporary files
+*.swp
+*.swo
+
+# Backup files
+*~
