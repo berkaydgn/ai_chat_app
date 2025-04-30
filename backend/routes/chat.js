@@ -1,21 +1,37 @@
 const express = require('express');
-const openai = require('openai');
+const axios = require('axios');
 const router = express.Router();
+require('dotenv').config();
 
-openai.apiKey = process.env.OPENAI_API_KEY;
+// Hugging face API URL for model inference 
+const HUGGING_FACE_API_URL = process.env.HUGGING_FACE_API_URL
+const API_KEY = process.env.HUGGING_FACE_API_KEY
 
 router.post('/chat', async (req, res) => {
-    const { message } = req.body;
-    try {
-        const response = await openai.createCompletion({
-            model: 'text-davinci-003',
-            prompt: message,
-            max_tokens: 150,
-        });
-        res.json({ reply: response.data.choices[0].text});
-    }   catch (error) {
-        res.status(500).send('Error communicating with ChatGPT');
-    }
+  const { message } = req.body;
+  
+  try {
+    // Make a POST request to Huggingface API
+    const response = await axios.post(
+        HUGGING_FACE_API_URL,
+        {
+            inputs: message,
+        },
+        {
+            headers: {
+                Authorization: `Bearer ${API_KEY}`,
+            },
+        }
+    );
+
+    // Extract the model's response and send it back to the client
+    const aiReply = response.data[0]?.generated_text || 'Sorry, no response from AI.';
+    res.json({reply: aiReply});
+    
+  } catch (error) {
+    console.error(error.message); // Log error for debugging
+    res.status(500).send('Error communicating with Hugging Face AI');
+  }
 });
 
 module.exports = router;
