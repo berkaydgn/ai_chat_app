@@ -11,7 +11,7 @@ const Chat = () => {
         setMessage('');
         try {
           const response = await axios.post('http://localhost:5000/api/chat', { message });
-          setChat([...chat, { user: 'You', text: message }, { user: 'AI', trxt: response.data.reply}]);
+          setChat([...chat, { user: 'You', text: message }, { user: 'AI', text: response.data.reply}]);
         } catch (error) {
           console.error(error);
         }
