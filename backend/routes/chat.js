@@ -6,7 +6,6 @@ require('dotenv').config();
 // Gemini API 
 const GEMINI_URL = `${process.env.GEMINI_BASE_URL}/models/${process.env.GEMINI_MODEL}:generateContent?key=${process.env.GEMINI_API_KEY}`;
 
-
 router.post('/chat', async (req, res) => {
   const { message } = req.body;
 
